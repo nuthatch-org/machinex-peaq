@@ -29,7 +29,7 @@ nuthatch init --from-subgraph QmcssauLtPam7J4pmAbvCKVoaBH6mowXhQJpLRMEyoQsEL \
 
 **Chain:** `peaq` (chain id 3338, not in nuthatch's built-in registry - the config carries its own
 endpoints and takes the unregistered-chain finality policy). **5 contracts**, **5 templates**,
-**7 factory rules**, **44 tables**.
+**7 factory rules**, **40 declared tables** plus one `__children` table per template.
 
 | alias | address | start block |
 |---|---|---|
@@ -43,7 +43,7 @@ endpoints and takes the unregistered-chain finality policy). **5 contracts**, **
 
 Indexed blocks **11,341,876 to 11,361,878** and stored **99 rows** across 4 tables: 45 position
 fee collections, 22 liquidity increases, 17 position transfers and 15 liquidity decreases. Decode is
-correct on everything that fired. **40 of the 44 tables were empty**, for the reasons below - that is
+correct on everything that fired. **Every other table was empty** (4 of 44 in the live nest had rows), for the reasons below - that is
 the honest result of this run, not a summary of what the nest could do with a better endpoint.
 
 ## Read this before trusting it
@@ -89,7 +89,7 @@ which issues wide windows that `evm.peaq.network` and onfinality answer with
 
 ## Tables
 
-44 tables across 5 contracts and 5 templates. See `schema.json`, or `nuthatch sql --dir . ".tables"`.
+40 declared tables across 5 contracts and 5 templates, plus one `__children` table per template. See `schema.json`, or `nuthatch sql --dir . ".tables"`.
 
 ## Licence
 
