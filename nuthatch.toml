@@ -1,0 +1,168 @@
+[nest]
+name = "machinex-peaq"
+chain = "peaq"
+chain_id = 3338
+rpc_urls = [
+    "https://evm.peaq.network",
+    "https://peaq-rpc.publicnode.com",
+]
+schema_version = 1
+block_timestamps = true
+
+[[contracts]]
+alias = "cl_factory"
+address = "0x2646dcbe025d21a2925fdaceb639e998e17d6060"
+start_block = 5248275
+abi = "abis/cl_factory.json"
+events = ["PoolCreated"]
+
+[[contracts]]
+alias = "fee_collector"
+address = "0x8dc13a3fc0a5a533dee8a00f8c68589e640b000e"
+start_block = 5248275
+abi = "abis/fee_collector.json"
+events = ["TreasuryFeesChanged"]
+
+[[contracts]]
+alias = "voter"
+address = "0x3af1dd7a2755201f8e2d6dcda1a61d9f54838f4f"
+start_block = 5248275
+abi = "abis/voter.json"
+events = [
+    "GaugeCreated",
+    "CustomGaugeCreated",
+    "GaugeKilled",
+    "GaugeRevived",
+    "Whitelisted",
+]
+
+[[contracts]]
+alias = "legacy_factory"
+address = "0xa3f356f0403b4f10345cd95e0c80483fddd63ebd"
+start_block = 5248275
+abi = "abis/legacy_factory.json"
+events = [
+    "PairCreated",
+    "SetPairFee",
+    "SetPairFeeSplit",
+]
+
+[[contracts]]
+alias = "nonfungible_position_manager"
+address = "0x4dbc7dd463bb4a8c6c4381cceeb58b9327c7cfa4"
+start_block = 5248275
+abi = "abis/nonfungible_position_manager.json"
+events = [
+    "IncreaseLiquidity",
+    "DecreaseLiquidity",
+    "Collect",
+    "Transfer",
+]
+
+[[templates]]
+name = "legacy_pool_template"
+abi = "abis/legacy_pool_template.json"
+events = [
+    "Mint",
+    "Burn",
+    "Swap",
+    "Transfer",
+    "Sync",
+]
+
+[[templates]]
+name = "cl_pool_template"
+abi = "abis/cl_pool_template.json"
+events = [
+    "Initialize",
+    "Swap",
+    "Mint",
+    "CollectProtocol",
+    "Burn",
+    "Collect",
+    "Flash",
+    "FeeAdjustment",
+    "SetFeeProtocol",
+]
+
+[[templates]]
+name = "cl_gauge_template"
+abi = "abis/cl_gauge_template.json"
+events = [
+    "NotifyReward",
+    "ClaimRewards",
+]
+
+[[templates]]
+name = "legacy_gauge_template"
+abi = "abis/legacy_gauge_template.json"
+events = [
+    "NotifyReward",
+    "Deposit",
+    "Withdraw",
+    "ClaimRewards",
+]
+
+[[templates]]
+name = "fee_distributor_template"
+abi = "abis/fee_distributor_template.json"
+events = [
+    "NotifyReward",
+    "VotesIncentivized",
+    "Deposit",
+    "Withdraw",
+]
+
+[[factories]]
+watch = "voter"
+event = "GaugeCreated"
+child_param = "feeDistributor"
+template = "fee_distributor_template"
+
+# --- factory wiring the manifest cannot express -------------------------------
+# `graph-node` decides which template a creation event spawns inside the mapping
+# WASM, so `init --from-subgraph` can only list candidates. These are the rules,
+# read off the creation-event signatures in abis/.
+
+[[factories]]
+watch = "cl_factory"
+event = "PoolCreated"
+child_param = "pool"
+template = "cl_pool_template"
+
+[[factories]]
+watch = "legacy_factory"
+event = "PairCreated"
+child_param = "pair"
+template = "legacy_pool_template"
+
+# Both gauge flavours are spawned by the same two Voter events and the manifest
+# cannot tell them apart. It does not need to: the two ABIs share event *names*
+# but no signatures - ClaimRewards is (uint256,bytes32,address,address,uint256)
+# on the CL gauge and (address,address,uint256) on the legacy one, so topic0
+# routes every log into exactly one table. Watching each address under both
+# templates costs no extra requests (the getLogs sweep is address-filtered over
+# the union) and cannot double-count.
+[[factories]]
+watch = "voter"
+event = "GaugeCreated"
+child_param = "gauge"
+template = "cl_gauge_template"
+
+[[factories]]
+watch = "voter"
+event = "GaugeCreated"
+child_param = "gauge"
+template = "legacy_gauge_template"
+
+[[factories]]
+watch = "voter"
+event = "CustomGaugeCreated"
+child_param = "gauge"
+template = "cl_gauge_template"
+
+[[factories]]
+watch = "voter"
+event = "CustomGaugeCreated"
+child_param = "gauge"
+template = "legacy_gauge_template"

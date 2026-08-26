@@ -1,0 +1,636 @@
+# semantic.toml - what this nest's data *means* (RFC-0016). Read by the MCP `schema`
+# tool, the admin UI, and the scaffolded skill. Edit descriptions freely; the
+# `[table.*.footguns]` are DERIVED from the ABI and regenerated - leave them be.
+
+schema_version = 1
+
+[nest]
+description = "MachineX (MX-V3) on peaq - a Solidly/Ramses-style DEX. Concentrated-liquidity and legacy pools discovered from their factories, gauges and fee distributors from the Voter, and position lifecycle from the NonfungiblePositionManager. Ported from subgraph deployment QmcssauLtPam7J4pmAbvCKVoaBH6mowXhQJpLRMEyoQsEL."
+
+[table.cl_factory__pool_created]
+description = "`PoolCreated(address,address,uint24,int24,address)` events emitted by the `cl_factory` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per PoolCreated(address,address,uint24,int24,address) event"
+
+[table.cl_factory__pool_created.columns]
+fee = "The `fee` uint24 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+pool = "The `pool` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+tickSpacing = "The `tickSpacing` int24 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+token0 = "The `token0` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+token1 = "The `token1` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.cl_gauge_template__claim_rewards]
+description = "`ClaimRewards(uint256,bytes32,address,address,uint256)` events emitted by the `cl_gauge_template` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per ClaimRewards(uint256,bytes32,address,address,uint256) event"
+
+[table.cl_gauge_template__claim_rewards.columns]
+_positionHash = "The `_positionHash` bytes32 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+amount = "The `amount` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+period = "The `period` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+receiver = "The `receiver` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+reward = "The `reward` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.cl_gauge_template__claim_rewards.footguns]
+big_ints = [
+    "period",
+    "amount",
+]
+overflows_dec = [
+    "period",
+    "amount",
+]
+
+[table.cl_gauge_template__notify_reward]
+description = "`NotifyReward(address,address,uint256,uint256)` events emitted by the `cl_gauge_template` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per NotifyReward(address,address,uint256,uint256) event"
+
+[table.cl_gauge_template__notify_reward.columns]
+amount = "The `amount` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+from = "The `from` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+period = "The `period` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+reward = "The `reward` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.cl_gauge_template__notify_reward.footguns]
+reserved_words = ["from"]
+big_ints = [
+    "amount",
+    "period",
+]
+overflows_dec = [
+    "amount",
+    "period",
+]
+
+[table.cl_pool_template__burn]
+description = "`Burn(address,int24,int24,uint128,uint256,uint256)` events emitted by the `cl_pool_template` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per Burn(address,int24,int24,uint128,uint256,uint256) event"
+
+[table.cl_pool_template__burn.columns]
+amount = "The `amount` uint128 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+amount0 = "The `amount0` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+amount1 = "The `amount1` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+owner = "The `owner` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+tickLower = "The `tickLower` int24 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+tickUpper = "The `tickUpper` int24 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.cl_pool_template__burn.footguns]
+big_ints = [
+    "amount",
+    "amount0",
+    "amount1",
+]
+overflows_dec = [
+    "amount0",
+    "amount1",
+]
+
+[table.cl_pool_template__collect]
+description = "`Collect(address,address,int24,int24,uint128,uint128)` events emitted by the `cl_pool_template` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per Collect(address,address,int24,int24,uint128,uint128) event"
+
+[table.cl_pool_template__collect.columns]
+amount0 = "The `amount0` uint128 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+amount1 = "The `amount1` uint128 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+owner = "The `owner` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+recipient = "The `recipient` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+tickLower = "The `tickLower` int24 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+tickUpper = "The `tickUpper` int24 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.cl_pool_template__collect.footguns]
+big_ints = [
+    "amount0",
+    "amount1",
+]
+
+[table.cl_pool_template__collect_protocol_596b]
+description = "`CollectProtocol(address,address,uint128,uint128)` events emitted by the `cl_pool_template` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per CollectProtocol(address,address,uint128,uint128) event"
+
+[table.cl_pool_template__collect_protocol_596b.columns]
+amount0 = "The `amount0` uint128 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+amount1 = "The `amount1` uint128 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+recipient = "The `recipient` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+sender = "The `sender` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.cl_pool_template__collect_protocol_596b.footguns]
+big_ints = [
+    "amount0",
+    "amount1",
+]
+
+[table.cl_pool_template__fee_adjustment]
+description = "`FeeAdjustment(uint24,uint24)` events emitted by the `cl_pool_template` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per FeeAdjustment(uint24,uint24) event"
+
+[table.cl_pool_template__fee_adjustment.columns]
+newFee = "The `newFee` uint24 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+oldFee = "The `oldFee` uint24 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.cl_pool_template__flash]
+description = "`Flash(address,address,uint256,uint256,uint256,uint256)` events emitted by the `cl_pool_template` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per Flash(address,address,uint256,uint256,uint256,uint256) event"
+
+[table.cl_pool_template__flash.columns]
+amount0 = "The `amount0` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+amount1 = "The `amount1` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+paid0 = "The `paid0` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+paid1 = "The `paid1` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+recipient = "The `recipient` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+sender = "The `sender` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.cl_pool_template__flash.footguns]
+big_ints = [
+    "amount0",
+    "amount1",
+    "paid0",
+    "paid1",
+]
+overflows_dec = [
+    "amount0",
+    "amount1",
+    "paid0",
+    "paid1",
+]
+
+[table.cl_pool_template__initialize]
+description = "`Initialize(uint160,int24)` events emitted by the `cl_pool_template` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per Initialize(uint160,int24) event"
+
+[table.cl_pool_template__initialize.columns]
+sqrtPriceX96 = "The `sqrtPriceX96` uint160 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+tick = "The `tick` int24 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.cl_pool_template__initialize.footguns]
+big_ints = ["sqrtPriceX96"]
+overflows_dec = ["sqrtPriceX96"]
+
+[table.cl_pool_template__mint]
+description = "`Mint(address,address,int24,int24,uint128,uint256,uint256)` events emitted by the `cl_pool_template` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per Mint(address,address,int24,int24,uint128,uint256,uint256) event"
+
+[table.cl_pool_template__mint.columns]
+amount = "The `amount` uint128 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+amount0 = "The `amount0` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+amount1 = "The `amount1` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+owner = "The `owner` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+sender = "The `sender` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+tickLower = "The `tickLower` int24 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+tickUpper = "The `tickUpper` int24 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.cl_pool_template__mint.footguns]
+big_ints = [
+    "amount",
+    "amount0",
+    "amount1",
+]
+overflows_dec = [
+    "amount0",
+    "amount1",
+]
+
+[table.cl_pool_template__set_fee_protocol_67a0]
+description = "`SetFeeProtocol(uint24,uint24)` events emitted by the `cl_pool_template` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per SetFeeProtocol(uint24,uint24) event"
+
+[table.cl_pool_template__set_fee_protocol_67a0.columns]
+feeProtocolNew = "The `feeProtocolNew` uint24 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+feeProtocolOld = "The `feeProtocolOld` uint24 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.cl_pool_template__set_fee_protocol_7a8f]
+description = "`SetFeeProtocol(uint8,uint8)` events emitted by the `cl_pool_template` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per SetFeeProtocol(uint8,uint8) event"
+
+[table.cl_pool_template__set_fee_protocol_7a8f.columns]
+feeProtocolNew = "The `feeProtocolNew` uint8 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+feeProtocolOld = "The `feeProtocolOld` uint8 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.cl_pool_template__swap]
+description = "`Swap(address,address,int256,int256,uint160,uint128,int24)` events emitted by the `cl_pool_template` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per Swap(address,address,int256,int256,uint160,uint128,int24) event"
+
+[table.cl_pool_template__swap.columns]
+amount0 = "The `amount0` int256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+amount1 = "The `amount1` int256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+liquidity = "The `liquidity` uint128 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+recipient = "The `recipient` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+sender = "The `sender` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+sqrtPriceX96 = "The `sqrtPriceX96` uint160 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+tick = "The `tick` int24 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.cl_pool_template__swap.footguns]
+big_ints = [
+    "amount0",
+    "amount1",
+    "sqrtPriceX96",
+    "liquidity",
+]
+overflows_dec = [
+    "amount0",
+    "amount1",
+    "sqrtPriceX96",
+]
+
+[table.fee_collector__treasury_fees_changed]
+description = "`TreasuryFeesChanged(uint256,uint256)` events emitted by the `fee_collector` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per TreasuryFeesChanged(uint256,uint256) event"
+
+[table.fee_collector__treasury_fees_changed.columns]
+newTreasuryFees = "The `newTreasuryFees` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+oldTreasuryFees = "The `oldTreasuryFees` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.fee_collector__treasury_fees_changed.footguns]
+big_ints = [
+    "oldTreasuryFees",
+    "newTreasuryFees",
+]
+overflows_dec = [
+    "oldTreasuryFees",
+    "newTreasuryFees",
+]
+
+[table.fee_distributor_template__deposit]
+description = "`Deposit(address,uint256)` events emitted by the `fee_distributor_template` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per Deposit(address,uint256) event"
+
+[table.fee_distributor_template__deposit.columns]
+amount = "The `amount` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+owner = "The `owner` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.fee_distributor_template__deposit.footguns]
+big_ints = ["amount"]
+overflows_dec = ["amount"]
+
+[table.fee_distributor_template__notify_reward]
+description = "`NotifyReward(address,address,uint256,uint256)` events emitted by the `fee_distributor_template` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per NotifyReward(address,address,uint256,uint256) event"
+
+[table.fee_distributor_template__notify_reward.columns]
+amount = "The `amount` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+from = "The `from` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+period = "The `period` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+reward = "The `reward` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.fee_distributor_template__notify_reward.footguns]
+reserved_words = ["from"]
+big_ints = [
+    "amount",
+    "period",
+]
+overflows_dec = [
+    "amount",
+    "period",
+]
+
+[table.fee_distributor_template__votes_incentivized]
+description = "`VotesIncentivized(address,address,uint256,uint256)` events emitted by the `fee_distributor_template` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per VotesIncentivized(address,address,uint256,uint256) event"
+
+[table.fee_distributor_template__votes_incentivized.columns]
+amount = "The `amount` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+from = "The `from` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+period = "The `period` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+reward = "The `reward` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.fee_distributor_template__votes_incentivized.footguns]
+reserved_words = ["from"]
+big_ints = [
+    "amount",
+    "period",
+]
+overflows_dec = [
+    "amount",
+    "period",
+]
+
+[table.fee_distributor_template__withdraw]
+description = "`Withdraw(address,uint256)` events emitted by the `fee_distributor_template` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per Withdraw(address,uint256) event"
+
+[table.fee_distributor_template__withdraw.columns]
+amount = "The `amount` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+owner = "The `owner` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.fee_distributor_template__withdraw.footguns]
+big_ints = ["amount"]
+overflows_dec = ["amount"]
+
+[table.legacy_factory__pair_created]
+description = "`PairCreated(address,address,address,uint256)` events emitted by the `legacy_factory` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per PairCreated(address,address,address,uint256) event"
+
+[table.legacy_factory__pair_created.columns]
+arg3 = "The `arg3` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+pair = "The `pair` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+token0 = "The `token0` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+token1 = "The `token1` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.legacy_factory__pair_created.footguns]
+big_ints = ["arg3"]
+overflows_dec = ["arg3"]
+
+[table.legacy_factory__set_pair_fee]
+description = "`SetPairFee(address,uint256)` events emitted by the `legacy_factory` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per SetPairFee(address,uint256) event"
+
+[table.legacy_factory__set_pair_fee.columns]
+fee = "The `fee` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+pair = "The `pair` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.legacy_factory__set_pair_fee.footguns]
+big_ints = ["fee"]
+overflows_dec = ["fee"]
+
+[table.legacy_factory__set_pair_fee_split]
+description = "`SetPairFeeSplit(address,uint256)` events emitted by the `legacy_factory` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per SetPairFeeSplit(address,uint256) event"
+
+[table.legacy_factory__set_pair_fee_split.columns]
+_feeSplit = "The `_feeSplit` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+pair = "The `pair` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.legacy_factory__set_pair_fee_split.footguns]
+big_ints = ["_feeSplit"]
+overflows_dec = ["_feeSplit"]
+
+[table.legacy_gauge_template__claim_rewards]
+description = "`ClaimRewards(address,address,uint256)` events emitted by the `legacy_gauge_template` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per ClaimRewards(address,address,uint256) event"
+
+[table.legacy_gauge_template__claim_rewards.columns]
+amount = "The `amount` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+from = "The `from` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+reward = "The `reward` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.legacy_gauge_template__claim_rewards.footguns]
+reserved_words = ["from"]
+big_ints = ["amount"]
+overflows_dec = ["amount"]
+
+[table.legacy_gauge_template__deposit]
+description = "`Deposit(address,uint256)` events emitted by the `legacy_gauge_template` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per Deposit(address,uint256) event"
+
+[table.legacy_gauge_template__deposit.columns]
+amount = "The `amount` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+from = "The `from` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.legacy_gauge_template__deposit.footguns]
+reserved_words = ["from"]
+big_ints = ["amount"]
+overflows_dec = ["amount"]
+
+[table.legacy_gauge_template__notify_reward]
+description = "`NotifyReward(address,address,uint256)` events emitted by the `legacy_gauge_template` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per NotifyReward(address,address,uint256) event"
+
+[table.legacy_gauge_template__notify_reward.columns]
+amount = "The `amount` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+from = "The `from` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+reward = "The `reward` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.legacy_gauge_template__notify_reward.footguns]
+reserved_words = ["from"]
+big_ints = ["amount"]
+overflows_dec = ["amount"]
+
+[table.legacy_gauge_template__withdraw]
+description = "`Withdraw(address,uint256)` events emitted by the `legacy_gauge_template` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per Withdraw(address,uint256) event"
+
+[table.legacy_gauge_template__withdraw.columns]
+amount = "The `amount` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+from = "The `from` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.legacy_gauge_template__withdraw.footguns]
+reserved_words = ["from"]
+big_ints = ["amount"]
+overflows_dec = ["amount"]
+
+[table.legacy_pool_template__burn]
+description = "`Burn(address,uint256,uint256,address)` events emitted by the `legacy_pool_template` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per Burn(address,uint256,uint256,address) event"
+
+[table.legacy_pool_template__burn.columns]
+amount0 = "The `amount0` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+amount1 = "The `amount1` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+sender = "The `sender` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+to = "The `to` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.legacy_pool_template__burn.footguns]
+reserved_words = ["to"]
+big_ints = [
+    "amount0",
+    "amount1",
+]
+overflows_dec = [
+    "amount0",
+    "amount1",
+]
+
+[table.legacy_pool_template__mint]
+description = "`Mint(address,uint256,uint256)` events emitted by the `legacy_pool_template` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per Mint(address,uint256,uint256) event"
+
+[table.legacy_pool_template__mint.columns]
+amount0 = "The `amount0` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+amount1 = "The `amount1` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+sender = "The `sender` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.legacy_pool_template__mint.footguns]
+big_ints = [
+    "amount0",
+    "amount1",
+]
+overflows_dec = [
+    "amount0",
+    "amount1",
+]
+
+[table.legacy_pool_template__swap]
+description = "`Swap(address,uint256,uint256,uint256,uint256,address)` events emitted by the `legacy_pool_template` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per Swap(address,uint256,uint256,uint256,uint256,address) event"
+
+[table.legacy_pool_template__swap.columns]
+amount0In = "The `amount0In` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+amount0Out = "The `amount0Out` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+amount1In = "The `amount1In` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+amount1Out = "The `amount1Out` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+sender = "The `sender` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+to = "The `to` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.legacy_pool_template__swap.footguns]
+reserved_words = ["to"]
+big_ints = [
+    "amount0In",
+    "amount1In",
+    "amount0Out",
+    "amount1Out",
+]
+overflows_dec = [
+    "amount0In",
+    "amount1In",
+    "amount0Out",
+    "amount1Out",
+]
+
+[table.legacy_pool_template__sync]
+description = "`Sync(uint112,uint112)` events emitted by the `legacy_pool_template` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per Sync(uint112,uint112) event"
+
+[table.legacy_pool_template__sync.columns]
+reserve0 = "The `reserve0` uint112 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+reserve1 = "The `reserve1` uint112 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.legacy_pool_template__sync.footguns]
+big_ints = [
+    "reserve0",
+    "reserve1",
+]
+
+[table.legacy_pool_template__transfer]
+description = "`Transfer(address,address,uint256)` events emitted by the `legacy_pool_template` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per Transfer(address,address,uint256) event"
+
+[table.legacy_pool_template__transfer.columns]
+from = "The `from` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+to = "The `to` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+value = "The `value` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.legacy_pool_template__transfer.footguns]
+reserved_words = [
+    "from",
+    "to",
+]
+big_ints = ["value"]
+overflows_dec = ["value"]
+
+[table.nonfungible_position_manager__collect]
+description = "`Collect(uint256,address,uint256,uint256)` events emitted by the `nonfungible_position_manager` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per Collect(uint256,address,uint256,uint256) event"
+
+[table.nonfungible_position_manager__collect.columns]
+amount0 = "The `amount0` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+amount1 = "The `amount1` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+recipient = "The `recipient` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+tokenId = "The `tokenId` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.nonfungible_position_manager__collect.footguns]
+big_ints = [
+    "tokenId",
+    "amount0",
+    "amount1",
+]
+overflows_dec = [
+    "tokenId",
+    "amount0",
+    "amount1",
+]
+
+[table.nonfungible_position_manager__decrease_liquidity]
+description = "`DecreaseLiquidity(uint256,uint128,uint256,uint256)` events emitted by the `nonfungible_position_manager` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per DecreaseLiquidity(uint256,uint128,uint256,uint256) event"
+
+[table.nonfungible_position_manager__decrease_liquidity.columns]
+amount0 = "The `amount0` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+amount1 = "The `amount1` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+liquidity = "The `liquidity` uint128 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+tokenId = "The `tokenId` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.nonfungible_position_manager__decrease_liquidity.footguns]
+big_ints = [
+    "tokenId",
+    "liquidity",
+    "amount0",
+    "amount1",
+]
+overflows_dec = [
+    "tokenId",
+    "amount0",
+    "amount1",
+]
+
+[table.nonfungible_position_manager__increase_liquidity]
+description = "`IncreaseLiquidity(uint256,uint128,uint256,uint256)` events emitted by the `nonfungible_position_manager` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per IncreaseLiquidity(uint256,uint128,uint256,uint256) event"
+
+[table.nonfungible_position_manager__increase_liquidity.columns]
+amount0 = "The `amount0` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+amount1 = "The `amount1` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+liquidity = "The `liquidity` uint128 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+tokenId = "The `tokenId` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.nonfungible_position_manager__increase_liquidity.footguns]
+big_ints = [
+    "tokenId",
+    "liquidity",
+    "amount0",
+    "amount1",
+]
+overflows_dec = [
+    "tokenId",
+    "amount0",
+    "amount1",
+]
+
+[table.nonfungible_position_manager__transfer]
+description = "`Transfer(address,address,uint256)` events emitted by the `nonfungible_position_manager` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per Transfer(address,address,uint256) event"
+
+[table.nonfungible_position_manager__transfer.columns]
+from = "The `from` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+to = "The `to` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+tokenId = "The `tokenId` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.nonfungible_position_manager__transfer.footguns]
+reserved_words = [
+    "from",
+    "to",
+]
+big_ints = ["tokenId"]
+overflows_dec = ["tokenId"]
+
+[table.voter__custom_gauge_created]
+description = "`CustomGaugeCreated(address,address,address)` events emitted by the `voter` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per CustomGaugeCreated(address,address,address) event"
+
+[table.voter__custom_gauge_created.columns]
+creator = "The `creator` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+gauge = "The `gauge` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+token = "The `token` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.voter__gauge_created]
+description = "`GaugeCreated(address,address,address,address)` events emitted by the `voter` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per GaugeCreated(address,address,address,address) event"
+
+[table.voter__gauge_created.columns]
+creator = "The `creator` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+feeDistributor = "The `feeDistributor` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+gauge = "The `gauge` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+pool = "The `pool` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.voter__gauge_killed]
+description = "`GaugeKilled(address)` events emitted by the `voter` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per GaugeKilled(address) event"
+
+[table.voter__gauge_killed.columns]
+gauge = "The `gauge` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.voter__gauge_revived]
+description = "`GaugeRevived(address)` events emitted by the `voter` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per GaugeRevived(address) event"
+
+[table.voter__gauge_revived.columns]
+gauge = "The `gauge` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.voter__whitelisted]
+description = "`Whitelisted(address,address)` events emitted by the `voter` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per Whitelisted(address,address) event"
+
+[table.voter__whitelisted.columns]
+token = "The `token` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+whitelister = "The `whitelister` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[view]
+
+# Authored views (views/*.sql) are described here so the MCP/`/schema` can render them:
+# [view.your_view_name]
+# description = "What this derivation computes."
