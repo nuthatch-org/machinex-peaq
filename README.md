@@ -1,6 +1,6 @@
 # machinex-peaq
 
-A [nuthatch](https://github.com/nightswatchhq/nuthatch) nest: **MachineX (MX-V3) on peaq**.
+A [nuthatch](https://github.com/nuthatch-org/nuthatch) nest: **MachineX (MX-V3) on peaq**.
 
 A Solidly/Ramses-style DEX: concentrated-liquidity and legacy pools discovered from their factories,
 gauges and fee distributors from the Voter, and position lifecycle from the position manager.
@@ -75,7 +75,7 @@ the honest result of this run, not a summary of what the nest could do with a be
 ## Run it
 
 ```sh
-nuthatch init --from https://github.com/nightswatchhq/machinex-peaq
+nuthatch init --from https://github.com/nuthatch-org/machinex-peaq
 cd machinex-peaq
 nuthatch dev --dir . --backfill 20000 --window 2000
 nuthatch sql --dir . "SELECT count(*) FROM nonfungible_position_manager__collect"
